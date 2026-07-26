@@ -443,9 +443,12 @@ textarea:user-invalid { border-color: var(--error); }
   position: relative;
   z-index: 2;
   margin-bottom: 0;
-  /* Tighter side padding on the hero masthead so the nav sits closer to the
-     left edge and the wordmark sits closer to the right edge. */
-  padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+  /* Break out of the 1120px shell cap so the hero masthead spans the full
+     viewport width. Nav (leftmost flex item) hugs the actual left edge of
+     the page, wordmark hugs the right edge — no more mid-page float on
+     wide monitors. */
+  max-width: none;
+  padding-inline: clamp(0.75rem, 2vw, 1.75rem);
 }
 .masthead-over .wordmark      { color: #FFF; }
 .masthead-over .wordmark-sub  { color: rgba(255, 255, 255, 0.8); }

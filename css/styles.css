@@ -117,6 +117,7 @@ body.has-bg {
   color: var(--steel);
   text-decoration: none;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .wordmark-sub {
@@ -443,7 +444,7 @@ textarea:user-invalid { border-color: var(--error); }
 .masthead-over .nav a:hover,
 .masthead-over .nav a[aria-current="page"] {
   color: #FFF;
-  border-bottom-color: var(--mark);
+  border-bottom-color: var(--steel);
 }
 
 /* --- Hero --------------------------------------------------------------- */

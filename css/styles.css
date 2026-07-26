@@ -109,6 +109,12 @@ body.has-bg {
 }
 
 .wordmark {
+  /* inline-flex column so "Giant Caulk" and the subtitle stack and both center
+     on the same axis — with the subtitle being the wider line, "Giant Caulk"
+     centers over it. */
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
   font-family: var(--display);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
@@ -437,6 +443,9 @@ textarea:user-invalid { border-color: var(--error); }
   position: relative;
   z-index: 2;
   margin-bottom: 0;
+  /* Tighter side padding on the hero masthead so the nav sits closer to the
+     left edge and the wordmark sits closer to the right edge. */
+  padding-inline: clamp(0.75rem, 2vw, 1.5rem);
 }
 .masthead-over .wordmark      { color: #FFF; }
 .masthead-over .wordmark-sub  { color: rgba(255, 255, 255, 0.8); }
@@ -444,7 +453,10 @@ textarea:user-invalid { border-color: var(--error); }
 .masthead-over .nav a:hover,
 .masthead-over .nav a[aria-current="page"] {
   color: #FFF;
-  border-bottom-color: var(--steel);
+  /* Deep brand blue — chosen over --steel so it reads clearly against the
+     photo (not orange/amber, per the design system). */
+  border-bottom-color: var(--steel-deep);
+  border-bottom-width: 2px;
 }
 
 /* --- Hero --------------------------------------------------------------- */
@@ -523,7 +535,10 @@ textarea:user-invalid { border-color: var(--error); }
 
 .hero p {
   font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
-  color: rgba(255, 255, 255, 0.9);
+  /* Darker tone so the tagline reads with weight against the photo — sits on
+     the light-glass area of the hero where dark text has strong contrast. */
+  color: var(--ink);
+  font-weight: 500;
   margin: 0 0 var(--gap-l);
   max-width: 40ch;
 }

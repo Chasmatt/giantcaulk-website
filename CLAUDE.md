@@ -140,6 +140,8 @@ comp. Don't add new stock imagery without confirming licensing.
 
 - Buttons use active voice: "Send request", not "Submit".
 - The company name reads as a double entendre. It was raised with the owner and
-  kept. Don't lean into it, don't editorialize about it in the copy.
+  kept. The **owner's approved slogan** — *"Cracks big or small we fill them
+  all."* — is intentional and leans into the pun. Use it verbatim on the home
+  hero. Don't editorialize about the name beyond what the owner has approved.
 - Sentence case in prose; the display face handles uppercase via CSS
   `text-transform`, so don't type headings in caps.

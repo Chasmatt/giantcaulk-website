@@ -1,9 +1,10 @@
 # Giant Caulk — website
 
-Two-page static site. No build step, no framework, no dependencies.
+Three-page static site. No build step, no framework, no dependencies.
 
 ```
 index.html      home page
+services.html   services detail page
 contact.html    quote request form
 thanks.html     confirmation page (form redirects here)
 css/styles.css  all styling

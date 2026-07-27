@@ -5,10 +5,11 @@ Context for Claude Code working in this repo.
 ## What this is
 
 Marketing site for **Giant Caulk**, a commercial caulking and joint sealing
-contractor. Two real pages plus a form confirmation page. The audience is
-general contractors, property managers, facility directors, and restoration
-consultants — not homeowners. Copy should stay technical and specific; this
-audience knows what backer rod is and is unimpressed by "quality you can trust."
+contractor. Three real pages (home, services, contact) plus a form confirmation
+page. The audience is general contractors, property managers, facility
+directors, and restoration consultants — not homeowners. Copy should stay
+technical and specific; this audience knows what backer rod is and is
+unimpressed by "quality you can trust."
 
 ## Hard constraints — do not violate without being asked
 

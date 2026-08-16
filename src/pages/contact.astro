@@ -9,11 +9,12 @@ import Layout from "../layouts/Layout.astro";
   footerTheme="dark"
   bodyClass="has-desk-bg"
 >
-  {/* Desk photo background with a paper-white wash — set on this page only. */}
+  {/* Desk photo background — the phone in the photo shows the contact info,
+      so we don't need a separate contact sidebar. */}
   <style>
     body.has-desk-bg {
       background-image:
-        linear-gradient(rgba(245, 246, 247, 0.72), rgba(245, 246, 247, 0.72)),
+        linear-gradient(rgba(245, 246, 247, 0.62), rgba(245, 246, 247, 0.62)),
         url("/images/hero-desk.jpg");
       background-size: cover;
       background-position: center;
@@ -30,9 +31,11 @@ import Layout from "../layouts/Layout.astro";
   </style>
 
   <section class="px-4 md:px-8 py-8 md:py-12 max-w-[1400px] mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start">
+    {/* Form floats on the LEFT half of the page so the phone in the background
+        photo (with owner + phone + email displayed) stays visible on the right.
+        On smaller screens the card widens to fill the viewport. */}
+    <div class="max-w-full md:max-w-[560px] lg:max-w-[620px] md:mr-auto">
 
-      {/* FLOATING FORM CARD */}
       <div class="rounded-2xl bg-white shadow-2xl shadow-navy/25 overflow-hidden">
         <div class="p-6 md:p-10">
           <h1 class="font-serif text-4xl md:text-5xl font-bold text-navy mb-3">
@@ -43,17 +46,17 @@ import Layout from "../layouts/Layout.astro";
             elements out. Contact us today for your sealing needs.
           </p>
 
-          {/* Steel bead divider — the signature detail carried from the old design system. */}
+          {/* Steel bead divider — signature detail from the design system. */}
           <div class="h-[3px] w-full bg-steel rounded-full mb-8"></div>
 
           {/*
-            Netlify Forms:
-              - data-netlify="true"           → Netlify captures the submission.
-              - netlify-honeypot="bot-field"  → hidden decoy for spam bots.
-              - action="/thanks"              → our custom confirmation page.
-              - enctype="multipart/form-data" → required for the file upload.
-              - Email input MUST stay name="email" so Netlify sets Reply-To.
-          -->
+            Netlify Forms plumbing:
+              - data-netlify="true"           tells Netlify to capture the submission
+              - netlify-honeypot="bot-field"  hidden decoy for spam bots
+              - action="/thanks"              custom confirmation page
+              - enctype="multipart/form-data" required for the blueprint file upload
+              - Email input MUST stay name="email" so Netlify sets Reply-To
+          */}
           <form
             name="contact"
             method="POST"
@@ -66,8 +69,7 @@ import Layout from "../layouts/Layout.astro";
             <input type="hidden" name="form-name" value="contact" />
 
             <p class="hidden">
-              <label>
-                Leave this field empty
+              <label>Leave this field empty
                 <input name="bot-field" tabindex="-1" autocomplete="off" />
               </label>
             </p>
@@ -116,7 +118,7 @@ import Layout from "../layouts/Layout.astro";
 
             <div class="field">
               <label for="comments" class="field-label">
-                Comments <span class="text-concrete-500 font-normal normal-case tracking-normal">— building type, address, and scope of work</span>
+                Comments <span class="text-concrete-500 font-normal normal-case tracking-normal">&mdash; building type, address, and scope of work</span>
               </label>
               <textarea
                 id="comments" name="comments" rows="6" required
@@ -126,12 +128,12 @@ import Layout from "../layouts/Layout.astro";
               ></textarea>
             </div>
 
-            {/* BLUEPRINT UPLOAD — accepts common construction file types. */}
+            {/* Blueprint upload — accepts common construction file types. */}
             <div class="field">
               <label for="blueprints" class="field-label inline-flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
                 Attach Blueprints
-                <span class="text-concrete-500 font-normal normal-case tracking-normal">— PDF, JPG, PNG, DWG, TIF (optional)</span>
+                <span class="text-concrete-500 font-normal normal-case tracking-normal">&mdash; PDF, JPG, PNG, DWG, TIF (optional)</span>
               </label>
               <input
                 type="file" id="blueprints" name="blueprints"
@@ -142,7 +144,7 @@ import Layout from "../layouts/Layout.astro";
             </div>
 
             <button type="submit" class="btn-primary w-full sm:w-auto">
-              Submit <span aria-hidden="true">→</span>
+              Submit <span aria-hidden="true">&rarr;</span>
             </button>
 
             <p class="font-body text-xs text-concrete-500 mt-4">
@@ -152,46 +154,12 @@ import Layout from "../layouts/Layout.astro";
         </div>
       </div>
 
-      {/* SIDEBAR — direct contact card */}
-      <aside class="rounded-2xl bg-navy text-white shadow-2xl shadow-navy/30 p-6 md:p-8 lg:sticky lg:top-6">
-        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 border-b border-white/20 pb-4">
-          Contact Us
-        </h2>
-
-        <dl class="space-y-5 font-body">
-          <div>
-            <dt class="text-xs uppercase tracking-widest text-white/60 mb-1">Owner</dt>
-            {/* TODO placeholder: confirm owner name spelling */}
-            <dd class="text-lg">Scott Matthias</dd>
-          </div>
-
-          <div>
-            <dt class="text-xs uppercase tracking-widest text-white/60 mb-1">Phone Number</dt>
-            {/* TODO placeholder: real phone number */}
-            <dd class="text-lg">
-              <a href="tel:+13172601079" class="hover:text-white/80 transition-colors">
-                317-260-1079
-              </a>
-            </dd>
-          </div>
-
-          <div>
-            <dt class="text-xs uppercase tracking-widest text-white/60 mb-1">Email</dt>
-            <dd class="text-lg break-all">
-              <a href="mailto:giantcaulk@outlook.com" class="hover:text-white/80 transition-colors">
-                giantcaulk@outlook.com
-              </a>
-            </dd>
-          </div>
-        </dl>
-      </aside>
-
     </div>
   </section>
 </Layout>
 
 <style>
-  /* Form field styling — one place so every input renders the same. */
+  /* Form field styling — one place, so every input renders the same. */
   .field-label {
     display: block;
     font-family: "IBM Plex Sans", system-ui, sans-serif;

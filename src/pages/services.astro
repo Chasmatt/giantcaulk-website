@@ -1,0 +1,51 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+
+const services = [
+  {
+    title: "Caulking and Sealants",
+    body: "We remove, replace, and install high-quality sealants around windows, doors, panels, and other building joints. Our work helps create a durable barrier against water, air, and changing weather conditions.",
+  },
+  {
+    title: "Leak Detection",
+    body: "We locate the source of water intrusion and identify damaged or failing sealant joints. Once the problem is found, we recommend an effective solution to help prevent further damage.",
+  },
+  {
+    title: "Expansion Joints",
+    body: "We install and repair expansion joint systems that allow buildings to move safely as temperatures and conditions change. Properly maintained joints help prevent cracking, leaks, and premature building damage.",
+  },
+];
+---
+
+<Layout
+  title="Services | Giant Caulk"
+  description="Commercial caulking and sealants, leak detection, and expansion joints — protecting your building from water intrusion, air leaks, and structural movement."
+  navTheme="light"
+  footerTheme="dark"
+>
+  {/* Dark navy hero band with the section title */}
+  <section class="bg-navy text-white -mt-[calc(72px+56px)] md:-mt-[80px] pt-[calc(72px+56px)] md:pt-[80px] pb-16 md:pb-24">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8 text-center">
+      <h1 class="font-display text-6xl md:text-8xl tracking-widest mt-8 md:mt-12 mb-6">
+        OUR SERVICES
+      </h1>
+      <p class="font-body text-base md:text-lg text-white/85 max-w-3xl mx-auto leading-relaxed uppercase tracking-wide">
+        We provide professional commercial caulking and waterproofing solutions
+        <br class="hidden md:inline" />
+        designed to protect your building
+        <br class="hidden md:inline" />
+        from water intrusion, air leaks, and structural movement.
+      </p>
+    </div>
+  </section>
+
+  {/* Card grid */}
+  <section class="max-w-[1400px] mx-auto px-4 md:px-8 py-14 md:py-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      {services.map((s) => (
+        <ServiceCard title={s.title} body={s.body} />
+      ))}
+    </div>
+  </section>
+</Layout>

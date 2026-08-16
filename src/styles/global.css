@@ -1,0 +1,62 @@
+/* Global styles — loaded once by Layout.astro. Tailwind handles the rest. */
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-concrete-50 text-navy font-body antialiased;
+    /* All form inputs stay ≥ 16px so iOS doesn't zoom on focus. */
+  }
+
+  /* Prevent horizontal scroll on any viewport. */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Respect user's reduced-motion preference. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Skip link — visible on keyboard focus. */
+  .skip {
+    @apply absolute -left-full top-0 bg-white text-navy px-4 py-2 z-50;
+  }
+  .skip:focus {
+    @apply left-2 top-2;
+  }
+
+  /* Primary CTA — blue pill button. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-steel px-8 py-3
+           font-body font-semibold text-white shadow-lg shadow-navy/20
+           transition-all duration-200 hover:bg-steel-deep hover:shadow-xl
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+           focus-visible:outline-steel;
+  }
+
+  /* Secondary CTA — outlined. */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2
+           border-white/70 px-8 py-3 font-body font-semibold text-white
+           transition-all duration-200 hover:border-white hover:bg-white/10
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+           focus-visible:outline-white;
+  }
+}

@@ -1,0 +1,45 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Giant Caulk | Precision Caulking. Lasting Protection."
+  description="Commercial caulking and joint sealing across Central Indiana. We remove, replace, and install the sealant joints that keep water out. Cracks big or small we fill them all."
+  navTheme="light"
+  footerTheme="light"
+  bodyClass="bg-navy-deep text-white"
+>
+  {/* Full-viewport hero — photo fills the screen; nav sits over it at the top. */}
+  <section class="relative min-h-[100dvh] -mt-[calc(72px+56px)] md:-mt-[80px] flex flex-col overflow-hidden">
+    <picture class="absolute inset-0 -z-10">
+      <source media="(min-width: 1400px)" srcset="/images/hero-sealing-2400.jpg" />
+      <source media="(min-width: 700px)" srcset="/images/hero-sealing-1600.jpg" />
+      <img
+        src="/images/hero-sealing-1000.jpg"
+        alt="A sealant applicator tooling a bead of silicone into the aluminium curb joint of a skylight on a commercial roof."
+        class="h-full w-full object-cover object-[62%_55%]"
+        fetchpriority="high"
+      />
+    </picture>
+
+    {/* Dark scrim so the wordmark + headline stay legible over any part of the photo. */}
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-navy-deep/70 via-navy-deep/30 to-navy-deep/70"></div>
+
+    {/* Spacer to visually center the headline over the hero (nav is sticky to top of the section). */}
+    <div class="flex-1 flex flex-col items-center justify-center px-4 text-center pt-[calc(80px+2rem)] pb-16 md:pt-32 md:pb-24">
+      {/* Layered headline: sans "PRECISION CAULKING" over serif "LASTING PROTECTION" */}
+      <h1 class="relative">
+        <span class="block font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.08em] text-white/60 [text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">
+          PRECISION CAULKING
+        </span>
+        <span class="block font-serif font-black uppercase text-5xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.95] text-white mt-2 md:mt-3 [text-shadow:0_4px_20px_rgba(0,0,0,0.5)]">
+          Lasting<br class="sm:hidden" /> Protection
+        </span>
+      </h1>
+
+      <a href="/contact" class="btn-primary mt-10 md:mt-14 text-base md:text-lg px-10 py-4">
+        Request A Quote <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Layout>

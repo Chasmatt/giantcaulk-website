@@ -1,0 +1,24 @@
+<!--
+  Netlify Forms detection stub.
+  Astro's build pipeline can strip data-netlify from the compiled HTML; this
+  static file lives in /public and is copied to /dist/__forms.html unmodified,
+  so Netlify's parser sees it during build and registers the "contact" form.
+  The real form on /contact submits to Netlify Forms once registered.
+
+  If you add or rename a field on the contact form, mirror the change here.
+-->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Netlify Forms</title></head>
+<body>
+<form name="contact" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+  <input type="text"  name="company" />
+  <input type="text"  name="name" />
+  <input type="email" name="email" />
+  <input type="tel"   name="phone" />
+  <textarea name="comments"></textarea>
+  <input type="file"  name="blueprints" />
+  <input type="text"  name="bot-field" />
+</form>
+</body>
+</html>

@@ -1,0 +1,60 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Request received | Giant Caulk"
+  description="Your request has been received. Here's what happens next."
+  navTheme="dark"
+  footerTheme="dark"
+  bodyClass="has-desk-bg"
+>
+  <style>
+    body.has-desk-bg {
+      background-image:
+        linear-gradient(rgba(245, 246, 247, 0.72), rgba(245, 246, 247, 0.72)),
+        url("/images/hero-desk.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    @media (max-width: 700px) {
+      body.has-desk-bg {
+        background-image:
+          linear-gradient(rgba(245, 246, 247, 0.85), rgba(245, 246, 247, 0.85)),
+          url("/images/hero-desk-mobile.jpg");
+        background-attachment: scroll;
+      }
+    }
+  </style>
+
+  <meta name="robots" content="noindex" slot="head" />
+
+  <section class="px-4 md:px-8 py-16 md:py-24 max-w-3xl mx-auto">
+    <div class="rounded-2xl bg-white shadow-2xl shadow-navy/25 p-6 md:p-10">
+      <p class="font-body text-xs uppercase tracking-[0.2em] text-steel mb-2">Confirmation</p>
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-navy mb-4">
+        Request received
+      </h1>
+      <p class="font-body text-lg text-navy/75 mb-6">
+        Your request is in. Here&rsquo;s what happens next.
+      </p>
+
+      <ol class="font-body text-base text-navy/75 space-y-3 mb-8 pl-5 list-decimal">
+        <li>An estimator reviews the scope, usually the same day.</li>
+        <li>We follow up by email or phone to confirm details and, on larger jobs, schedule a site walk.</li>
+        <li>You get written pricing with the sealant products and schedule spelled out.</li>
+      </ol>
+
+      <a href="/" class="btn-primary">Back to home</a>
+
+      <p class="font-body text-sm text-concrete-500 mt-6">
+        {/* TODO placeholder: real phone number */}
+        Need us sooner? Call
+        <a href="tel:+13172601079" class="text-navy underline decoration-steel underline-offset-4 hover:decoration-navy transition-colors">
+          (317) 260-1079
+        </a>.
+      </p>
+    </div>
+  </section>
+</Layout>

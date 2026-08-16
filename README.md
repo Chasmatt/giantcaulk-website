@@ -1,131 +1,127 @@
 # Giant Caulk — website
 
-Three-page static site. No build step, no framework, no dependencies.
+Four-page marketing site for a commercial caulking contractor.
+**Astro 5 + Tailwind CSS + Netlify Forms.** Deployed to `giantcaulk.netlify.app`.
 
 ```
-index.html      home page
-services.html   services detail page
-contact.html    quote request form
-thanks.html     confirmation page (form redirects here)
-css/styles.css  all styling
-images/         hero photos, pre-sized
-netlify.toml    host config, cache headers
+src/
+├── layouts/Layout.astro       shared head + nav + footer wrapper
+├── components/
+│   ├── Nav.astro              4-link nav with active/hover states
+│   ├── Wordmark.astro         GIANT CAULK logo
+│   ├── ServiceCard.astro      flip card (front = title, back = paragraph)
+│   └── Footer.astro
+├── pages/
+│   ├── index.astro            home — full-viewport photo hero
+│   ├── about.astro            two-column photo + paragraph layout
+│   ├── services.astro         dark hero + 3-card flip grid
+│   ├── contact.astro          floating form + blueprint file upload
+│   └── thanks.astro           form-submission confirmation
+└── styles/global.css          Google Fonts + Tailwind + tokens
+public/
+├── images/                    hero + about + desk photos (pre-sized)
+├── __forms.html               Netlify Forms detection stub — DO NOT delete
+├── favicon.svg
+├── robots.txt
+└── sitemap.xml
+astro.config.mjs               Astro + Tailwind integration
+tailwind.config.mjs            navy/steel/concrete palette + font stacks
+netlify.toml                   build command + cache headers
 ```
 
 ---
 
-## Preview locally — do this instead of deploying
-
-Every production deploy costs 15 credits out of a monthly 300, shared across
-every project on the Netlify account. That's about 20 deploys a month. Looking
-at your own changes should never cost one.
-
-From this folder:
+## Local development
 
 ```bash
-python3 -m http.server 8000
+npm install
+npm run dev            # http://localhost:4321
 ```
 
-Then open <http://localhost:8000>. Ctrl+C to stop.
+Other commands:
 
-Use this rather than opening the files directly with `file://`, because the
-`/thanks` path only resolves correctly when something is serving the directory.
+| Command | Action |
+|---------|--------|
+| `npm run build` | Production build → `dist/` |
+| `npm run preview` | Preview the production build locally |
 
-Any of these work equally well if you'd rather:
+**Preview local edits before pushing** — every production deploy costs 15
+Netlify credits and the account shares a 300/month pool with other sites.
+Batch changes and push when the change is complete.
 
-```bash
-npx serve .          # Node
-php -S localhost:8000  # PHP
+---
+
+## Editing content
+
+Copy lives inside the `.astro` page files themselves — search for a phrase in
+`src/pages/` and edit inline. The design tokens (colors, fonts) live at the
+top of `tailwind.config.mjs` and `src/styles/global.css`.
+
+### Adding a service card
+
+Open `src/pages/services.astro`, add an object to the `services` array:
+
+```js
+{
+  title: "New Service Name",
+  body: "Description that appears on the back of the card when clicked.",
+}
 ```
 
-**Workflow that keeps you inside the free tier:** edit, refresh the local
-preview, edit again, refresh. Only commit and push when a change is actually
-finished. Five edits pushed together cost 15 credits. Five edits pushed one at
-a time cost 75.
+The grid auto-adjusts. Three cards side-by-side on desktop is the sweet spot.
 
----
+### Swapping a photo
 
-## Staying free
+Drop a resized JPG into `public/images/` and reference it from the page. Never
+commit a camera original — hero and desk photos serve at 64–250 KB after
+resizing. Resize snippet:
 
-- **Batch your pushes.** This is the whole game. See above.
-- **Turn off deploy previews and branch deploys** in the Netlify UI under
-  Build & deploy → Deploy contexts. Each one consumes credits, and for a
-  solo two-page site they earn nothing.
-- **Leave auto-recharge off.** It's off by default on Free and can't be
-  enabled there anyway, but don't turn it on if you upgrade.
-- **Enable usage notifications.** Netlify emails at 50%, 75%, and 100%. On a
-  shared account with other projects, this is your early warning.
-- **Don't add images without resizing them.** See below.
-
-Bandwidth is not a real constraint here — roughly 15 GB/month against page
-weights of 93–256 KB. Forms are free and unlimited on credit-based plans.
-
----
-
-## Adding or replacing images
-
-Never drop a camera-original or a stock download straight into `images/`.
-The hero photo arrived at 5621px wide and 2.5 MB; it now serves at 64–231 KB.
-
-To resize a new one:
-
-```bash
-python3 - << 'EOF'
-from PIL import Image
-im = Image.open('new-photo.jpg').convert('RGB')
-w, h = im.size
-for width in (2400, 1600, 1000):
-    im.resize((width, round(width * h / w)), Image.LANCZOS).save(
-        f'images/new-photo-{width}.jpg', 'JPEG',
-        quality=80, optimize=True, progressive=True)
-EOF
+```powershell
+# PowerShell / System.Drawing (Windows, no dependencies)
+Add-Type -AssemblyName System.Drawing
+$img = [System.Drawing.Image]::FromFile('source.jpg')
+# ...resize to target width, save as JPG quality 80–82
 ```
 
-Then reference them with `srcset`, following the pattern in `index.html`.
+---
+
+## Deploying
+
+**Every push to `main` deploys automatically to Netlify.** Nothing else to do.
+
+First-time Netlify wiring (done once, already in place):
+1. Netlify UI → Sites → your site → Site configuration → Build & deploy
+2. Repository connected to `Chasmatt/giantcaulk-website`
+3. Build command: `npm run build` (also in `netlify.toml`)
+4. Publish directory: `dist` (also in `netlify.toml`)
+
+### The contact form
+
+**Netlify Forms** handles submissions. In the Netlify UI:
+
+1. **Forms tab → Enable form detection** (required once; without it Netlify
+   silently discards submissions)
+2. **Notifications → Add email notification** → recipient `giantcaulk@outlook.com`
+3. Notifications come from `formresponses@netlify.com` — whitelist it
+4. Every submission is also stored under the Forms tab, independent of email
+5. Blueprint attachments appear as download links inside the notification email
+
+The `email` field on the form is named exactly `email` on purpose — Netlify
+uses that field to set the notification email's Reply-To, so you can reply
+straight to the prospect.
 
 ---
 
-## Things to change before launch
+## Things to change before public launch
 
-Placeholders currently in the files:
+`TODO` placeholders in the source, waiting on the business owner:
 
-| Placeholder | Appears in |
-| --- | --- |
-| `(317) 555-0100` | `index.html`, `contact.html`, `thanks.html` |
-| `estimates@giantcaulk.com` | `contact.html` |
-| `Central Indiana` | `contact.html` |
-| `© Adobe Stock` credit | `index.html` (delete if unwanted) |
+| Placeholder | Files |
+|-------------|-------|
+| `(317) 260-1079` | Nav footer, Contact sidebar, Thanks page |
+| `giantcaulk@outlook.com` | Contact sidebar |
+| `Scott Matthias` (owner name) | Contact sidebar |
+| `REPLACE-WITH-REAL-DOMAIN.com` | `public/robots.txt`, `public/sitemap.xml` |
+| Licensing / insurance wording | Nav footer |
 
-Also still to do:
-
-- `robots.txt` and `sitemap.xml`
-- Real hours, license numbers, and insurance limits
-- Confirm the Adobe Stock file is a licensed download, not a comp
-
----
-
-## Adjusting the look
-
-One variable at the top of `css/styles.css` controls how faded the background
-photo is on the contact page:
-
-```css
---wash: 0.80;   /* 0 = full photo, 1 = solid colour */
-```
-
-Try 0.60–0.65 if you want the branded caulk tube in the photo to stay legible.
-
----
-
-## Netlify setup reminders
-
-1. **Enable form detection** under Forms, then redeploy. Submissions are not
-   captured until this is on — this is the usual cause of a form that appears
-   to work but records nothing.
-2. **Add the email notification** under Project configuration → Notifications
-   → Form submission notifications.
-3. Notifications send from `formresponses@netlify.com`. Whitelist it.
-4. The email input is named `email` on purpose — that sets the Reply-To header
-   so you can reply straight to the prospect. Don't rename it.
-5. Every submission is also stored in the Forms tab, independent of email.
-   That's the backup if a notification bounces.
+Also confirm the Adobe Stock hero photo is a licensed download, not a comp.

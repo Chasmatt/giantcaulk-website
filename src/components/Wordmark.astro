@@ -1,0 +1,17 @@
+---
+// Giant Caulk wordmark — condensed display face, subtitle beneath.
+// `theme` prop controls light-on-dark vs dark-on-light rendering.
+interface Props {
+  theme?: "light" | "dark";
+}
+const { theme = "dark" } = Astro.props;
+const textColor = theme === "light" ? "text-white" : "text-navy";
+const subColor  = theme === "light" ? "text-white/75" : "text-concrete-500";
+---
+
+<a href="/" class={`inline-flex flex-col items-center leading-none no-underline ${textColor}`}>
+  <span class="font-display text-3xl md:text-4xl tracking-wider">GIANT CAULK</span>
+  <span class={`font-body text-[0.6875rem] md:text-xs tracking-[0.2em] uppercase mt-1 ${subColor}`}>
+    Commercial Caulking
+  </span>
+</a>

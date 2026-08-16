@@ -1,0 +1,82 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="About Us | Giant Caulk"
+  description="Three decades of commercial caulking, sealing, and leak detection. Based in the Greater Indianapolis area and willing to travel."
+  navTheme="dark"
+  footerTheme="dark"
+>
+  <section class="px-4 md:px-8 pt-6 pb-16 max-w-[1400px] mx-auto">
+
+    {/* Page title */}
+    <h1 class="font-display text-6xl md:text-8xl text-navy tracking-widest text-center mb-12 md:mb-16">
+      ABOUT US
+    </h1>
+
+    {/* Two-column grid — photo + paragraph in each column. */}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
+
+      <article class="flex flex-col">
+        <div class="rounded-sm overflow-hidden shadow-lg shadow-navy/10 aspect-[4/3]">
+          <picture>
+            <source media="(min-width: 700px)" srcset="/images/about-1.jpg" />
+            <img
+              src="/images/about-1-mobile.jpg"
+              alt="A clean sealant joint between a stone façade and a metal door frame on a commercial building."
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+        <p class="mt-6 md:mt-8 font-body text-base md:text-lg text-navy leading-relaxed text-center md:text-left">
+          At Giant Caulk, we bring more than 30 years of experience to
+          commercial caulking, sealing, leak detection, and building protection.
+          Based in the Greater Indianapolis area, we proudly serve Indianapolis
+          and surrounding communities &mdash; and we&rsquo;re willing to travel
+          wherever the job takes us.
+        </p>
+        <p class="mt-4 font-body text-base md:text-lg text-navy leading-relaxed text-center md:text-left">
+          Our services include commercial caulking and sealants, leak detection
+          and prevention, expansion joints, and window sealing. Whether you&rsquo;re
+          dealing with an active leak, deteriorating sealant, or looking to
+          prevent future water intrusion, our goal is to identify the problem
+          and provide a dependable, long-lasting solution.
+        </p>
+      </article>
+
+      <article class="flex flex-col">
+        <div class="rounded-sm overflow-hidden shadow-lg shadow-navy/10 aspect-[4/3]">
+          <picture>
+            <source media="(min-width: 700px)" srcset="/images/about-2.jpg" />
+            <img
+              src="/images/about-2-mobile.jpg"
+              alt="Before and after: cracked, failing sealant on the left, clean new sealant on the right."
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+        <p class="mt-6 md:mt-8 font-body text-base md:text-lg text-navy leading-relaxed text-center md:text-left">
+          Quality service is at the center of everything we do. We believe our
+          job is about more than completing a project; it&rsquo;s about earning
+          our customers&rsquo; trust.
+        </p>
+        <p class="mt-4 font-body text-base md:text-lg text-navy leading-relaxed text-center md:text-left">
+          We strive to build and maintain lasting relationships by providing
+          reliable workmanship, clear communication, and solutions tailored to
+          each property. Whether it&rsquo;s leak detection or leak prevention,
+          we&rsquo;ll work with you to solve the issue and help protect your
+          building from the elements.
+        </p>
+        <p class="mt-4 font-body text-base md:text-lg text-navy leading-relaxed text-center md:text-left">
+          With decades of hands-on experience and a commitment to doing the job
+          right, Giant Caulk is ready to help with your next commercial caulking
+          or sealing project.
+        </p>
+      </article>
+
+    </div>
+  </section>
+</Layout>

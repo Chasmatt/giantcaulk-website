@@ -1,0 +1,85 @@
+---
+import Wordmark from "./Wordmark.astro";
+
+// Four links, split visually: Home / About on the left, Contact / Services
+// on the right, wordmark centered on wide screens. Active-state = lighter
+// color, hover = same lightening. `theme` controls light-on-dark (hero) vs
+// dark-on-light (interior pages).
+interface Props {
+  theme?: "light" | "dark";
+}
+const { theme = "dark" } = Astro.props;
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const leftLinks  = [
+  { href: "/",       label: "Home" },
+  { href: "/about",  label: "About Us" },
+];
+const rightLinks = [
+  { href: "/contact",  label: "Contact Us" },
+  { href: "/services", label: "Services" },
+];
+
+function isActive(href: string) {
+  if (href === "/") return path === "/";
+  return path === href || path.startsWith(href + "/");
+}
+
+// Base/hover/active color classes by theme.
+const linkBase   = theme === "light" ? "text-white/85" : "text-navy/70";
+const linkHover  = theme === "light" ? "hover:text-white" : "hover:text-navy";
+const linkActive = theme === "light" ? "text-white" : "text-navy";
+const activeBar  = theme === "light" ? "bg-white" : "bg-steel-deep";
+---
+
+<header class="relative z-30">
+  <nav aria-label="Main" class="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-4 px-4 py-5 md:px-8 md:py-6">
+
+    {/* LEFT LINKS */}
+    <ul class="flex items-center gap-6 md:gap-10">
+      {leftLinks.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            aria-current={isActive(l.href) ? "page" : undefined}
+            class={`group relative font-serif text-base md:text-lg tracking-wide transition-colors ${linkBase} ${linkHover} ${isActive(l.href) ? linkActive : ""}`}
+          >
+            {l.label}
+            <span
+              class={`absolute -bottom-1 left-0 right-0 h-[2px] rounded transition-transform origin-center ${activeBar} ${isActive(l.href) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
+            ></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {/* WORDMARK — centered on ≥md */}
+    <div class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <Wordmark theme={theme} />
+    </div>
+
+    {/* RIGHT LINKS */}
+    <ul class="flex items-center gap-6 md:gap-10">
+      {rightLinks.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            aria-current={isActive(l.href) ? "page" : undefined}
+            class={`group relative font-serif text-base md:text-lg tracking-wide transition-colors ${linkBase} ${linkHover} ${isActive(l.href) ? linkActive : ""}`}
+          >
+            {l.label}
+            <span
+              class={`absolute -bottom-1 left-0 right-0 h-[2px] rounded transition-transform origin-center ${activeBar} ${isActive(l.href) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
+            ></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  {/* Small-screen wordmark — sits below the nav row so nothing overlaps. */}
+  <div class="md:hidden flex justify-center pb-4">
+    <Wordmark theme={theme} />
+  </div>
+</header>

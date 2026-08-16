@@ -1,0 +1,232 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Contact Us | Giant Caulk"
+  description="Request a quote for commercial caulking, joint sealing, and leak detection. Attach blueprints and we'll reply within one business day."
+  navTheme="dark"
+  footerTheme="dark"
+  bodyClass="has-desk-bg"
+>
+  {/* Desk photo background with a paper-white wash — set on this page only. */}
+  <style>
+    body.has-desk-bg {
+      background-image:
+        linear-gradient(rgba(245, 246, 247, 0.72), rgba(245, 246, 247, 0.72)),
+        url("/images/hero-desk.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    @media (max-width: 700px) {
+      body.has-desk-bg {
+        background-image:
+          linear-gradient(rgba(245, 246, 247, 0.85), rgba(245, 246, 247, 0.85)),
+          url("/images/hero-desk-mobile.jpg");
+        background-attachment: scroll;
+      }
+    }
+  </style>
+
+  <section class="px-4 md:px-8 py-8 md:py-12 max-w-[1400px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start">
+
+      {/* FLOATING FORM CARD */}
+      <div class="rounded-2xl bg-white shadow-2xl shadow-navy/25 overflow-hidden">
+        <div class="p-6 md:p-10">
+          <h1 class="font-serif text-4xl md:text-5xl font-bold text-navy mb-3">
+            Contact Us
+          </h1>
+          <p class="font-body text-base md:text-lg text-navy/75 mb-6 max-w-[52ch] leading-relaxed">
+            Whether it&rsquo;s leak detection or leak prevention, we keep the
+            elements out. Contact us today for your sealing needs.
+          </p>
+
+          {/* Steel bead divider — the signature detail carried from the old design system. */}
+          <div class="h-[3px] w-full bg-steel rounded-full mb-8"></div>
+
+          {/*
+            Netlify Forms:
+              - data-netlify="true"           → Netlify captures the submission.
+              - netlify-honeypot="bot-field"  → hidden decoy for spam bots.
+              - action="/thanks"              → our custom confirmation page.
+              - enctype="multipart/form-data" → required for the file upload.
+              - Email input MUST stay name="email" so Netlify sets Reply-To.
+          -->
+          <form
+            name="contact"
+            method="POST"
+            action="/thanks"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            enctype="multipart/form-data"
+            class="space-y-5"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+
+            <p class="hidden">
+              <label>
+                Leave this field empty
+                <input name="bot-field" tabindex="-1" autocomplete="off" />
+              </label>
+            </p>
+
+            <div class="field">
+              <label for="company" class="field-label">Company Name</label>
+              <input
+                type="text" id="company" name="company"
+                autocomplete="organization" required
+                enterkeyhint="next"
+                class="field-input"
+              />
+            </div>
+
+            <div class="field">
+              <label for="name" class="field-label">Contact Name</label>
+              <input
+                type="text" id="name" name="name"
+                autocomplete="name" required
+                enterkeyhint="next"
+                class="field-input"
+              />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div class="field">
+                <label for="email" class="field-label">Contact Email</label>
+                <input
+                  type="email" id="email" name="email"
+                  autocomplete="email" required
+                  enterkeyhint="next" inputmode="email"
+                  class="field-input"
+                />
+              </div>
+
+              <div class="field">
+                <label for="phone" class="field-label">Contact Phone</label>
+                <input
+                  type="tel" id="phone" name="phone"
+                  autocomplete="tel" required
+                  enterkeyhint="next" inputmode="tel"
+                  class="field-input"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="comments" class="field-label">
+                Comments <span class="text-concrete-500 font-normal normal-case tracking-normal">— building type, address, and scope of work</span>
+              </label>
+              <textarea
+                id="comments" name="comments" rows="6" required
+                enterkeyhint="next"
+                placeholder="e.g. Six-storey precast office building, 400 Business Parkway. Approx. 3,200 LF of vertical panel joints, existing sealant failing. Looking for full removal and replacement."
+                class="field-input resize-y min-h-[9rem]"
+              ></textarea>
+            </div>
+
+            {/* BLUEPRINT UPLOAD — accepts common construction file types. */}
+            <div class="field">
+              <label for="blueprints" class="field-label inline-flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                Attach Blueprints
+                <span class="text-concrete-500 font-normal normal-case tracking-normal">— PDF, JPG, PNG, DWG, TIF (optional)</span>
+              </label>
+              <input
+                type="file" id="blueprints" name="blueprints"
+                accept=".pdf,.jpg,.jpeg,.png,.dwg,.dxf,.tif,.tiff,image/*,application/pdf"
+                multiple
+                class="field-input file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-steel file:text-white file:font-body file:font-semibold file:cursor-pointer hover:file:bg-steel-deep"
+              />
+            </div>
+
+            <button type="submit" class="btn-primary w-full sm:w-auto">
+              Submit <span aria-hidden="true">→</span>
+            </button>
+
+            <p class="font-body text-xs text-concrete-500 mt-4">
+              We reply to every request within one business day. Emergency leak or active water intrusion? Call instead.
+            </p>
+          </form>
+        </div>
+      </div>
+
+      {/* SIDEBAR — direct contact card */}
+      <aside class="rounded-2xl bg-navy text-white shadow-2xl shadow-navy/30 p-6 md:p-8 lg:sticky lg:top-6">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold mb-4 border-b border-white/20 pb-4">
+          Contact Us
+        </h2>
+
+        <dl class="space-y-5 font-body">
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-white/60 mb-1">Owner</dt>
+            {/* TODO placeholder: confirm owner name spelling */}
+            <dd class="text-lg">Scott Matthias</dd>
+          </div>
+
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-white/60 mb-1">Phone Number</dt>
+            {/* TODO placeholder: real phone number */}
+            <dd class="text-lg">
+              <a href="tel:+13172601079" class="hover:text-white/80 transition-colors">
+                317-260-1079
+              </a>
+            </dd>
+          </div>
+
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-white/60 mb-1">Email</dt>
+            <dd class="text-lg break-all">
+              <a href="mailto:giantcaulk@outlook.com" class="hover:text-white/80 transition-colors">
+                giantcaulk@outlook.com
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </aside>
+
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Form field styling — one place so every input renders the same. */
+  .field-label {
+    display: block;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #132A4A;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+  }
+  .field-input {
+    width: 100%;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 1rem;            /* ≥ 16px so iOS Safari doesn't zoom on focus */
+    color: #132A4A;
+    background: #EEF2F6;
+    border: 1px solid #C3CFDA;
+    border-bottom-width: 3px;
+    border-radius: 6px;
+    padding: 0.7rem 0.9rem;
+    transition: background-color 140ms ease, border-color 140ms ease;
+  }
+  .field-input::placeholder { color: #8698AA; }
+  .field-input:hover { background: #E7EDF3; }
+  .field-input:focus {
+    outline: none;
+    background: #FFF;
+    border-color: #3E6491;
+    border-bottom-color: #2C4A6E;
+  }
+  .field-input:focus-visible {
+    outline: 2px solid #3E6491;
+    outline-offset: 2px;
+  }
+  .field-input:user-invalid {
+    border-color: #B23A2F;
+  }
+</style>

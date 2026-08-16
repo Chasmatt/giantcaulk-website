@@ -1,0 +1,55 @@
+---
+// Flip card: front shows heading + subtle prompt, back shows the description.
+// Hover: subtle lift + shadow. Click / tap / keyboard Enter or Space: 3D flip.
+interface Props {
+  title: string;
+  body: string;
+}
+const { title, body } = Astro.props;
+---
+
+<div class="service-card group h-72 md:h-80 [perspective:1200px]">
+  <button
+    type="button"
+    class="service-card__inner relative h-full w-full rounded-lg text-left transition-transform duration-500 [transform-style:preserve-3d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-steel"
+    aria-label={`${title} — click to see details`}
+  >
+    {/* FRONT */}
+    <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-lg bg-white p-6 shadow-lg shadow-navy/10 transition-shadow duration-300 [backface-visibility:hidden] group-hover:shadow-2xl group-hover:shadow-navy/20 group-hover:-translate-y-1">
+      <div class="h-[3px] w-10 bg-steel rounded-full"></div>
+      <h3 class="font-serif text-2xl md:text-3xl font-bold text-navy text-center">
+        {title}
+      </h3>
+      <p class="font-body text-sm text-concrete-500 tracking-widest uppercase mt-4">
+        Tap to learn more
+      </p>
+    </div>
+
+    {/* BACK */}
+    <div class="absolute inset-0 flex flex-col justify-center rounded-lg bg-navy p-6 md:p-8 shadow-xl [backface-visibility:hidden] [transform:rotateY(180deg)]">
+      <h3 class="font-serif text-lg md:text-xl font-bold text-white mb-3">
+        {title}
+      </h3>
+      <p class="font-body text-sm md:text-[15px] text-white/85 leading-relaxed">
+        {body}
+      </p>
+      <p class="font-body text-xs text-white/50 tracking-widest uppercase mt-4">
+        Tap to flip back
+      </p>
+    </div>
+  </button>
+</div>
+
+<style>
+  .service-card__inner.is-flipped {
+    transform: rotateY(180deg);
+  }
+</style>
+
+<script>
+  // Click / tap / keyboard toggles the .is-flipped class on the inner surface.
+  // Scoped per card — clicking one doesn't affect the others.
+  document.querySelectorAll<HTMLButtonElement>(".service-card__inner").forEach((btn) => {
+    btn.addEventListener("click", () => btn.classList.toggle("is-flipped"));
+  });
+</script>

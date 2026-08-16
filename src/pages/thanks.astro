@@ -5,24 +5,20 @@ import Layout from "../layouts/Layout.astro";
 <Layout
   title="Request received | Giant Caulk"
   description="Your request has been received. Here's what happens next."
-  navTheme="dark"
-  footerTheme="dark"
+  navTheme="light"
+  footerTheme="light"
   bodyClass="has-desk-bg"
 >
   <style>
     body.has-desk-bg {
-      background-image:
-        linear-gradient(rgba(245, 246, 247, 0.72), rgba(245, 246, 247, 0.72)),
-        url("/images/hero-desk.jpg");
+      background-image: url("/images/hero-desk.jpg");
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
     }
     @media (max-width: 700px) {
       body.has-desk-bg {
-        background-image:
-          linear-gradient(rgba(245, 246, 247, 0.85), rgba(245, 246, 247, 0.85)),
-          url("/images/hero-desk-mobile.jpg");
+        background-image: url("/images/hero-desk-mobile.jpg");
         background-attachment: scroll;
       }
     }

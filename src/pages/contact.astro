@@ -5,26 +5,23 @@ import Layout from "../layouts/Layout.astro";
 <Layout
   title="Contact Us | Giant Caulk"
   description="Request a quote for commercial caulking, joint sealing, and leak detection. Attach blueprints and we'll reply within one business day."
-  navTheme="dark"
-  footerTheme="dark"
+  navTheme="light"
+  footerTheme="light"
   bodyClass="has-desk-bg"
 >
-  {/* Desk photo background — the phone in the photo shows the contact info,
-      so we don't need a separate contact sidebar. */}
+  {/* Desk photo shows at full strength — nav is white so it stays legible over
+      the wood grain at the top. The phone in the photo shows the contact info,
+      so no sidebar needed. */}
   <style>
     body.has-desk-bg {
-      background-image:
-        linear-gradient(rgba(245, 246, 247, 0.62), rgba(245, 246, 247, 0.62)),
-        url("/images/hero-desk.jpg");
+      background-image: url("/images/hero-desk.jpg");
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
     }
     @media (max-width: 700px) {
       body.has-desk-bg {
-        background-image:
-          linear-gradient(rgba(245, 246, 247, 0.85), rgba(245, 246, 247, 0.85)),
-          url("/images/hero-desk-mobile.jpg");
+        background-image: url("/images/hero-desk-mobile.jpg");
         background-attachment: scroll;
       }
     }

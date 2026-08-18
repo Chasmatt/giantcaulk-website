@@ -4,11 +4,17 @@
   command = "npm run build"
   publish = "dist"
 
-# Netlify serves thanks/index.html at /thanks by default; making the alias
-# explicit in case anyone lands on /thanks.html directly.
+# Astro builds directory URLs (/thanks/), so route legacy /thanks.html and
+# /thanks straight there — avoids a double-redirect chain during form POST.
 [[redirects]]
   from = "/thanks.html"
-  to = "/thanks"
+  to = "/thanks/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/thanks"
+  to = "/thanks/"
   status = 301
   force = true
 

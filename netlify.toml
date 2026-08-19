@@ -4,16 +4,12 @@
   command = "npm run build"
   publish = "dist"
 
-# Astro builds directory URLs (/thanks/), so route legacy /thanks.html and
-# /thanks straight there — avoids a double-redirect chain during form POST.
+# Legacy alias for /thanks.html → the Astro-built directory URL. We do NOT
+# redirect /thanks → /thanks/ here — Netlify's own pretty-URL logic handles
+# that, and adding a `force = true` redirect on top creates an infinite loop
+# when the target URL gets its trailing slash normalized off internally.
 [[redirects]]
   from = "/thanks.html"
-  to = "/thanks/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/thanks"
   to = "/thanks/"
   status = 301
   force = true

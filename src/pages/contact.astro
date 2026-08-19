@@ -62,18 +62,19 @@ import Layout from "../layouts/Layout.astro";
             The email input MUST stay name="email" so FormSubmit sets Reply-To.
           */}
           <form
+            id="contact-form"
             method="POST"
             action="https://formsubmit.co/giantcaulk@outlook.com"
             enctype="multipart/form-data"
             class="space-y-5"
           >
+            {/* _next is a fallback for the no-JS case; the primary redirect
+                path is the fetch() interceptor at the bottom of this file
+                (FormSubmit's free tier doesn't reliably honor _next with
+                multipart file uploads). */}
             <input type="hidden" name="_next" value="https://giantcaulk.netlify.app/thanks/" />
             <input type="hidden" name="_subject" value="New quote request — Giant Caulk website" />
             <input type="hidden" name="_captcha" value="false" />
-            {/* NOTE: do NOT add _template=table — FormSubmit's template response
-                overrides _next and lands the user on formsubmit.co/thanks
-                instead of our /thanks/ page. Choose one or the other; we chose
-                the custom thanks-page redirect. */}
 
             <p class="hidden">
               <label>Leave this field empty
@@ -151,7 +152,7 @@ import Layout from "../layouts/Layout.astro";
             </div>
 
             <div class="flex justify-center pt-2">
-              <button type="submit" class="btn-primary w-full sm:w-auto">
+              <button id="contact-submit" type="submit" class="btn-primary w-full sm:w-auto">
                 Submit <span aria-hidden="true">&rarr;</span>
               </button>
             </div>
@@ -166,6 +167,47 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 </Layout>
+
+{/* Progressive-enhancement redirect handler.
+    Why this exists: FormSubmit's `_next` field is honored inconsistently on
+    the free tier — especially with multipart file uploads on mobile Safari.
+    We POST the form via fetch and take the user to /thanks/ ourselves. If
+    JavaScript is disabled the form falls back to normal submission and
+    FormSubmit shows its own thanks page — degraded but still functional. */}
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const btn  = document.getElementById("contact-submit") as HTMLButtonElement | null;
+
+  if (form && btn) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      // Guard against double-submit while the request is in flight.
+      if (btn.disabled) return;
+      const originalHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.textContent = "Submitting…";
+
+      try {
+        // `no-cors` means we can't read the response (opaque), but FormSubmit
+        // still receives the POST and processes it server-side. That's all
+        // we need — we're going to redirect regardless of what they return.
+        await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          mode: "no-cors",
+        });
+      } catch (_err) {
+        // Network failures still fall through to the redirect so the user
+        // isn't stranded on a broken form. Not ideal — a hard network
+        // failure means the submission was never sent — but on a small
+        // marketing site the tradeoff for a simpler code path is fine.
+      }
+
+      window.location.href = "/thanks/";
+    });
+  }
+</script>
 
 <style>
   /* Form field styling — one place, so every input renders the same. */

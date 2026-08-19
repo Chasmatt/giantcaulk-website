@@ -69,8 +69,11 @@ import Layout from "../layouts/Layout.astro";
           >
             <input type="hidden" name="_next" value="https://giantcaulk.netlify.app/thanks/" />
             <input type="hidden" name="_subject" value="New quote request — Giant Caulk website" />
-            <input type="hidden" name="_template" value="table" />
             <input type="hidden" name="_captcha" value="false" />
+            {/* NOTE: do NOT add _template=table — FormSubmit's template response
+                overrides _next and lands the user on formsubmit.co/thanks
+                instead of our /thanks/ page. Choose one or the other; we chose
+                the custom thanks-page redirect. */}
 
             <p class="hidden">
               <label>Leave this field empty

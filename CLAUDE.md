@@ -15,23 +15,31 @@ restoration consultants — not homeowners.
   architecture; only `ServiceCard.astro` hydrates a tiny script for flip)
 - **Tailwind CSS 3** via `@astrojs/tailwind` — utility classes, no separate
   CSS files to maintain, tokens in `tailwind.config.mjs`
-- **Netlify Forms** — captures the contact form including file uploads,
-  emails notifications to `giantcaulk@outlook.com`
+- **FormSubmit** (free tier, no account) handles the contact form. The form
+  posts directly to `https://formsubmit.co/giantcaulk@outlook.com`; FormSubmit
+  emails the owner. We tried Netlify Forms first — it works for the free tier's
+  submission dashboard but email notifications require Netlify Pro ($19/mo).
 - Deployed to `giantcaulk.netlify.app` via `Chasmatt/giantcaulk-website`
 - **Netlify auto-deploys on every push to `main`.** Local preview is
   `npm run dev` — see README for the credit-preserving workflow.
 
 ## Hard constraints — do not violate without being asked
 
-**Preserve the contact form's Netlify plumbing.**
-- `data-netlify="true"` on the `<form>` tag
-- `netlify-honeypot="bot-field"` and the hidden `<p class="hp">` block
-- `action="/thanks"` for the custom confirmation page
-- `enctype="multipart/form-data"` (required for the blueprint file upload)
-- The email input MUST stay `name="email"` so Netlify sets Reply-To
-- `public/__forms.html` — Netlify's build-time form parser reads this file
-  to register the "contact" form. Astro can strip `data-netlify` from the
-  compiled HTML, so this stub is the safety net. **Do not delete it.**
+**Preserve the contact form's FormSubmit plumbing.**
+- `action="https://formsubmit.co/giantcaulk@outlook.com"` on the `<form>` tag
+- `method="POST"` and `enctype="multipart/form-data"` (required for blueprints)
+- Hidden config fields — DO NOT rename or remove:
+  - `_next` — full URL to redirect to after successful submit
+  - `_subject` — email subject line
+  - `_template=table` — renders the email as a clean field/value table
+  - `_captcha=false` — skip FormSubmit's captcha; we use `_honey` instead
+  - `_honey` — honeypot field; if filled, submission is dropped as spam
+- The email input MUST stay `name="email"` so FormSubmit sets Reply-To
+- **First submission from a new domain triggers a one-time activation email
+  to giantcaulk@outlook.com.** Clicking the confirmation link is required
+  before subsequent submissions get delivered. If email delivery stops,
+  check FormSubmit's dashboard OR re-submit from the form to trigger a new
+  activation email.
 
 **Every form input MUST render at ≥16px.**
 Below 16px iOS Safari zooms on focus and doesn't zoom back out. The

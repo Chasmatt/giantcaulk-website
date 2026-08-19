@@ -47,27 +47,34 @@ import Layout from "../layouts/Layout.astro";
           <div class="h-[3px] w-full bg-steel rounded-full mb-8"></div>
 
           {/*
-            Netlify Forms plumbing:
-              - data-netlify="true"           tells Netlify to capture the submission
-              - netlify-honeypot="bot-field"  hidden decoy for spam bots
-              - action="/thanks"              custom confirmation page
-              - enctype="multipart/form-data" required for the blueprint file upload
-              - Email input MUST stay name="email" so Netlify sets Reply-To
+            FormSubmit handles delivery — free tier, sends notification emails
+            directly to the address in the `action` URL. First submission from
+            this site triggers a one-time activation email to giantcaulk@outlook.com
+            that must be confirmed before subsequent submissions are delivered.
+
+            Hidden config fields (all start with underscore):
+              - _next          full URL to redirect to after successful submit
+              - _subject       email subject line
+              - _template=table renders form fields as a clean table in the email
+              - _captcha=false skip FormSubmit's captcha (we have a honeypot)
+              - _honey         honeypot field — if filled, submission is dropped
+
+            The email input MUST stay name="email" so FormSubmit sets Reply-To.
           */}
           <form
-            name="contact"
             method="POST"
-            action="/thanks/"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
+            action="https://formsubmit.co/giantcaulk@outlook.com"
             enctype="multipart/form-data"
             class="space-y-5"
           >
-            <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="_next" value="https://giantcaulk.netlify.app/thanks/" />
+            <input type="hidden" name="_subject" value="New quote request — Giant Caulk website" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
 
             <p class="hidden">
               <label>Leave this field empty
-                <input name="bot-field" tabindex="-1" autocomplete="off" />
+                <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
               </label>
             </p>
 
